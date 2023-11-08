@@ -1,0 +1,674 @@
+
+
+/* Estilo para las imágenes de los productos */
+.product-card img {
+  object-fit: cover;
+  width: 100%;
+  height: 300px;
+}
+
+/* Estilo para el contenedor de productos */
+#product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Estilo para las tarjetas de productos */
+.product-card {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Transición suave para las tarjetas de productos */
+.card.product-card {
+  transition: transform 0.2s;
+}
+/* Estilo base de la tarjeta del producto */
+.card.product-card {
+  transition: box-shadow 0.3s ease-in-out; /* Suavizado para el efecto de transición */
+}
+
+/* Efecto de neón al pasar el ratón por encima */
+.card.product-card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 255, 0.5), /* Resplandor exterior azul */
+               0 0 20px rgba(0, 0, 255, 0.5), /* Resplandor exterior más grande */
+               0 0 30px rgba(0, 0, 255, 0.7); /* Resplandor exterior aún más grande */
+}
+
+
+/* Estilo para el pie de página */
+.card-footer {
+  padding: 1rem;
+}
+
+/* Estilo para el título del pie de página */
+.card-footer h5 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+/* Estilo para el texto del pie de página */
+.card-footer p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Estilo para el gradiente de fondo del footer */
+.footer-gradient {
+  background-image: linear-gradient(to bottom, #000000, #1a237e);
+  color: #e0e0e0;
+}
+
+/* Estilo para los enlaces en el footer */
+.footer-gradient a {
+  color: #9fa8da;
+}
+
+/* Estilo para el efecto hover en los enlaces del footer */
+.footer-gradient a:hover {
+  color: #e0e0e0c1;
+}
+
+/* Estilo para el elemento h5 en el footer */
+.footer-gradient h5 {
+  margin-bottom: 20px;
+}
+
+/* Estilo para los íconos de redes sociales */
+.fab {
+  font-size: 24px;
+  margin: 0 8px;
+}
+
+/* Estilo para el gradiente de la cabecera */
+.header-gradient {
+  background-image: linear-gradient(to top, #000000, #1a237e);
+}
+
+/* Estilo para ajustar el menú a la derecha */
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
+/* Estilo para el menú desplegable */
+.dropdown-menu {
+  background-color: #1a237e;
+  text-align: center;
+}
+
+/* Animación para el despliegue del submenú */
+.dropdown-menu.animate__animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+/* Animación de entrada para el despliegue del submenú */
+.dropdown-menu.animate__fadeIn {
+  animation-name: animate__fadeIn;
+}
+
+/* Estilo para los enlaces del menú desplegable */
+.dropdown-menu a {
+  color: white;
+}
+
+/* Estilo para el efecto hover en los enlaces del menú desplegable */
+.dropdown-menu a:hover {
+  color: black !important;
+}
+
+/* Estilo para el cuerpo del documento */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo para el contenedor de vídeo */
+.video-placeholder {
+  height: 0;
+  padding-bottom: 56.25%;
+  background-color: #ddd;
+}
+
+/* Estilo para las imágenes de las tarjetas */
+.card-img-top {
+  max-width: 100%;
+}
+
+/* Estilo para las tarjetas */
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Efecto de sombra en las tarjetas al pasar el cursor */
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* Estilo para el título de la tarjeta */
+.card-title {
+  font-weight: 600;
+}
+
+/* Estilo para el texto de la tarjeta */
+.card-text {
+  font-size: 0.5rem;
+}
+
+/* Estilo para dispositivos móviles */
+@media (max-width: 576px) {
+  .card {
+    margin-bottom: 20px;
+  }
+}
+
+/* Estilo para el logotipo en la barra de navegación */
+.navbar-brand img {
+  max-width: 100px;
+  height: auto;
+}
+
+/* Estilo para la superposición en las tarjetas */
+.card-overlay {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Estilo para la imagen de la tarjeta */
+.card-image {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s;
+  object-fit: contain;
+}
+
+/* Efecto de escala en la imagen de la tarjeta al pasar el cursor */
+.card-overlay:hover .card-image {
+  transform: scale(1.2);
+}
+
+/* Estilo para la descripción superpuesta en las tarjetas */
+.card-description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s;
+  text-align: center; /* Centrar el texto */
+}
+
+/* Efecto de opacidad en la descripción superpuesta al pasar el cursor */
+.card-overlay:hover .card-description {
+  opacity: 1;
+}
+
+/* Estilo para el título de la descripción superpuesta */
+.card-description h4 {
+  font-size: 1.2rem; /* Tamaño de fuente más pequeño para ajustar en pantallas pequeñas */
+  margin-bottom: 10px;
+  word-wrap: break-word; /* Permite que las palabras largas se rompan y se ajusten al ancho del contenedor */
+}
+
+/* Estilo para el texto de la descripción superpuesta */
+.card-description p {
+  font-size: 1.8; /* Tamaño de fuente más pequeño para ajustar en pantallas pequeñas */
+  word-wrap: break-word; /* Permite que las palabras largas se rompan y se ajusten al ancho del contenedor */
+}
+
+.card-title-one-line {
+  white-space: nowrap;    /* Asegura que el texto no se ajustará a una nueva línea */
+  overflow: hidden;      /* Oculta el texto que excede el ancho del elemento */
+  text-overflow: ellipsis; /* Agrega puntos suspensivos al final del texto oculto */
+}
+
+/* Efecto de zoom en el logotipo */
+.logo-zoom img {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Estilo para el contenedor del logotipo */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Efecto de zoom en el logotipo al pasar el cursor */
+.logo-zoom:hover img {
+  transform: scale(1.2);
+}
+
+/* Estilo para dispositivos móviles */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    text-align: center;
+  }
+
+  .navbar-nav {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+  }
+
+  .navbar-collapse::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+/* Estilo para los elementos del menú */
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+/* Estilo para las filas de la tabla de usuarios */
+.table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+/* Estilo para el indicador de estado */
+.status-indicator {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+/* Estilo para el indicador de estado autenticado */
+.status-indicator-auth {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+  color: green;
+}
+
+/* Estilo para el indicador LED */
+#led-indicator {
+  display: flex;
+  align-items: center;
+  color: darkgray;
+}
+
+/* Estilo para el texto de inicio de sesión */
+.login-text {
+  font-size: 1rem;
+  color: darkgrey;
+}
+
+/* Estilo para el ícono verde */
+.green-icon {
+  color: green;
+}
+
+/* Estilo para el contenedor de la página */
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Estilo para las filas */
+.row {
+  flex: 1;
+}
+
+/* Estilo para las miniaturas de imágenes */
+.thumbnail {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Estilo para el contenedor de imágenes */
+.image-container-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  overflow: hidden;
+}
+
+/* Estilo para el contenido de productos */
+#products-content .products-container {
+  margin-bottom: 100px;
+}
+
+/* Estilo para el contenedor de productos */
+#product-container {
+  margin-bottom: 30px;
+}
+
+/* Estilo para el modal 5 */
+.modal-5 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilo para el fondo del modal 5 */
+.modal-5:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 35px;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 40%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0.65) 60%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Estilo para los enlaces del modal 5 */
+.modal-5 a {
+  color: #666;
+  padding: 13px 5px 5px;
+  margin: 0 10px;
+  position: relative;
+  text-align: center;
+}
+
+/* Estilo para el efecto hover en los enlaces del modal 5 */
+.modal-5 a:hover {
+  color: #fff;
+}
+
+/* Estilo para el efecto hover en los enlaces del modal 5 (círculo) */
+.modal-5 a:hover:after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: #1E7EE2;
+  border-radius: 100%;
+  z-index: -1;
+  left: -3px;
+  bottom: 4px;
+  margin: auto;
+}
+
+/* Estilo para los enlaces de navegación del modal 5 */
+.modal-5 a.next,
+.modal-5 a.prev {
+  color: #1a237e;
+}
+
+/* Estilo para el efecto hover en los enlaces de navegación del modal 5 */
+.modal-5 a.next:hover,
+.modal-5 a.prev:hover {
+  color: #fff;
+}
+
+/* Estilo para el efecto hover en los enlaces de navegación del modal 5 (círculo) */
+.modal-5 a.next:hover:after,
+.modal-5 a.prev:hover:after {
+  display: none;
+}
+
+/* Estilo para el enlace activo del modal 5 */
+.modal-5 a.active {
+  background: #1a237e;
+  color: #fff;
+}
+
+/* Estilo para el efecto de flecha en el enlace activo del modal 5 */
+.modal-5 a.active:before {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: -10px;
+  width: 18px;
+  border: 10px solid transparent;
+  border-bottom: 7px solid #104477;
+  z-index: -1;
+}
+
+/* Estilo para el efecto hover en el enlace activo del modal 5 (círculo) */
+.modal-5 a.active:hover:after {
+  display: none;
+}
+
+/* Estilo para el contenido del modal */
+.modal-content {
+  border-radius: 10px;
+}
+
+/* Estilo para los íconos de control del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para los indicadores del carrusel */
+.carousel-indicators li {
+  background-color: #555;
+}
+
+/* Estilo para el indicador activo del carrusel */
+.carousel-indicators .active {
+  background-color: #fff;
+}
+
+/* Estilo para la información del producto */
+#productInfo {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Estilo para el contenedor del carrusel */
+.carousel-inner {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Estilo para los elementos del carrusel */
+.carousel-item img,
+.carousel-item video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Estilo para los videos del carrusel */
+.carousel-item video {
+  object-fit: contain;
+}
+
+/* Estilo para los controles personalizados del video */
+.custom-video-controls .vjs-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para la sección de imagen */
+.image-section {
+  background-color: #000000;
+  min-height: 50vh;
+  color: white;
+  display: flex;
+}
+
+/* Estilo para el contenedor de contenido */
+.content-box {
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px;
+  margin-top: 100px;
+  text-align: center;
+  border: #fff;
+}
+
+.bg-light .text-white {
+  color: #fff;
+}
+
+.category-block {
+  padding: 20px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-align: center;
+}
+
+.category-block.bg-blue {
+  background: #1a237e;
+}
+
+.category-block.bg-grey {
+  background: #464646;
+}
+
+.category-block:hover {
+  opacity: 0.7;
+}
+
+
+.muestra-prod{
+  background-color: #1717178e;
+  overflow-y: auto;
+}
+
+.muestra-cat{
+  background-color: black;
+  overflow-y: auto;
+}
+
+.adaptive-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: auto;
+  
+}
+
+.categorias-container {
+  height: 375px; /* Ajusta esto al tamaño que desees */
+  overflow-y: auto;
+}
+
+.bg-deg-up{
+  background-image: linear-gradient(to top,  #000000,  #ffffff);
+  min-height: 100px;
+}
+.bg-deg-down{
+  background-image: linear-gradient(to bottom,  #000000, #ffffff);
+  min-height: 100px;
+}
+
+
+#custom-section {
+  background-color: black;
+  text-align: center;
+  padding: 0px;
+}
+
+#custom-section .content-box {
+  color: white;
+}
+
+#custom-section .content-box .img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+.social-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  background-color: #000;
+  border: none;
+}
+
+.card-img-wrapper {
+  margin-right: 15px; /* Asegura un espacio entre la imagen y el texto */
+}
+
+.platform-logo {
+  width: 250px; /* Ajusta este valor para el tamaño de la imagen del logo de la plataforma */
+  height: auto; /* Esto mantendrá la relación de aspecto de la imagen */
+}
+
+
+.account-logo {
+  width: 80px; /* Ajusta este valor para el tamaño de la imagen del logo de la cuenta */
+  height: auto;
+  margin-bottom: 10px; /* Espacio entre el logo de la cuenta y el texto */
+  border-radius: 25%;
+}
+
+.social-card .card-body {
+  flex: 1;
+  text-align: center;
+}
+
+.card-title {
+  margin-top: 0; /* Opcional: quita el margen superior si es necesario */
+}
+
+
+
+
+/* Estilos por defecto para pantallas grandes */
+.card-title {
+  font-size: 1.25rem; /* Tamaño original para pantallas grandes */
+}
+
+.card-text {
+  font-size: 1rem; /* Tamaño original para pantallas grandes */
+}
+
+/* Media query para pantallas de tabletas */
+@media (max-width: 768px) {
+  .card-title {
+      font-size: 1rem; /* Tamaño más pequeño para pantallas medianas */
+  }
+
+  .card-text {
+      font-size: 0.85rem; /* Tamaño más pequeño para pantallas medianas */
+  }
+}
+
+/* Media query para pantallas de móviles */
+@media (max-width: 576px) {
+  .card-title {
+      font-size: 0.9rem; /* Tamaño más pequeño para pantallas pequeñas */
+  }
+
+  .card-text {
+      font-size: 0.75rem; /* Tamaño más pequeño para pantallas pequeñas */
+  }
+}
+
+
+
+
+
+
+
+
+
