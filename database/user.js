@@ -46,10 +46,10 @@ async function createUsersTable() {
 // Crear el usuario administrador por defecto si no existe
 async function createDefaultAdminUser() {
   const defaultAdmin = {
-    username: 'admin',
-    email: 'admin@example.com',
-    country: 'Unknown',
-    password: 'Unanueva2017',
+    username: 'ViperCEO',
+    email: 'CEO@viper3d.com',
+    country: 'España',
+    password: 'Vi_per_3d_2023',
     isAdmin: true,
   };
 
