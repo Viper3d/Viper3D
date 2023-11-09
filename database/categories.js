@@ -11,10 +11,13 @@ const pool = mysql.createPool({
   user: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT, // Añade esta línea con el puerto específico
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
 });
+
+
 
 
 // Crear tabla de categorías
