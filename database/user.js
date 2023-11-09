@@ -8,14 +8,15 @@ dotenv.config();
 
 // Configurar el pool de conexiones a la base de datos
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
 });
+
 
 // Crear la tabla 'users' si no existe
 async function createUsersTable() {
