@@ -50,7 +50,7 @@ router.post('/register', async (req, res) => {
   const sanitizedCountry = sanitizeHtml(country);
 
   try {
-    await registerUser(sanitizedName, sanitizedEmail, sanitizedCountry, password, registrationDate, false);
+    await registerUser(sanitizedName, sanitizedEmail, sanitizedCountry, password, is_admin);
     res.status(200).send('Usuario registrado con éxito');
   } catch (error) {
     console.error('Error al registrar usuario:', error);
