@@ -83,7 +83,7 @@ async function registerUser(name, email, country, password, isAdmin = false) {
 
   const insertUserQuery = `
     INSERT INTO users (username, email, country, password, registration_date, is_admin)
-    VALUES (?, ?, ?, ?, NOW(), ?);
+    VALUES (?, ?, ?, ?, NOW(), false);
   `;
 
   try {
