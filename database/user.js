@@ -87,7 +87,7 @@ async function registerUser(name, email, country, password, isAdmin = false) {
   `;
 
   try {
-    const [result] = await pool.execute(insertUserQuery, [name, email, country, hashedPassword, isAdmin ? 1 : 0]);
+    const [result] = await pool.execute(insertUserQuery, [name, email, country, hashedPassword, isAdmin]);
     console.log('Usuario registrado con éxito. ID:', result.insertId);
   } catch (err) {
     console.error('Error al registrar usuario:', err);
