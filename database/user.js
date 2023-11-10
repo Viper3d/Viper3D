@@ -77,8 +77,7 @@ async function createDefaultAdminUser() {
   }
 }
 
-// Registrar un nuevo usuario
-async function registerUser(name, email, country, password, false) {
+async function registerUser(name, email, country, password, isAdmin = false) {
   const hashedPassword = await bcrypt.hash(password, 12);
 
   const insertUserQuery = `
@@ -87,13 +86,14 @@ async function registerUser(name, email, country, password, false) {
   `;
 
   try {
-    const [result] = await pool.execute(insertUserQuery, [name, email, country, hashedPassword, isAdmin ? 1 : 0]);
+    const [result] = await pool.execute(insertUserQuery, [name, email, country, hashedPassword, isAdmin]);
     console.log('Usuario registrado con éxito. ID:', result.insertId);
   } catch (err) {
     console.error('Error al registrar usuario:', err);
     throw err;
   }
 }
+
 
 // Validar un usuario
 async function validateUser(email, providedPassword) {
