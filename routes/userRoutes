@@ -33,7 +33,7 @@ function isAdmin(req, res, next) {
 
 // Ruta para registrar usuarios
 router.post('/register', async (req, res) => {
-  const { name, email, country, password, registrationDate, is_admin } = req.body;
+  const { name, email, country, password} = req.body;
 
   // Validar entradas
   if (!validator.isEmail(email)) {
