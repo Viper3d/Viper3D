@@ -1,78 +1,53 @@
 const multer = require('multer');
 const { google } = require('googleapis');
-const videoFolder = '13GpXRx0KOVynwvcU4RdFm35fnyYt4MrL'; 
-const imgFolder = '1ldv5248POuRX4O39RF7snLksx8Uj7snh';
 
-
-
+// Configuración de Google Drive
 const client = new google.auth.JWT(
   process.env.GOOGLE_CLIENT_EMAIL,
   null,
-  process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Reemplaza los \\n por saltos de línea reales
+  process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
   ['https://www.googleapis.com/auth/drive']
 );
-
 const drive = google.drive({ version: 'v3', auth: client });
 
+const videoFolder = '13GpXRx0KOVynwvcU4RdFm35fnyYt4MrL'; // ID de la carpeta de videos en Drive
+const imgFolder = '1ldv5248POuRX4O39RF7snLksx8Uj7snh'; // ID de la carpeta de imágenes en Drive
 
-// Multer config para almacenar archivos en memoria
+// Configuración de Multer para almacenar archivos en memoria
 const storage = multer.memoryStorage();
-
 const fileFilter = (req, file, cb) => {
-  if (file.fieldname === 'video') {
-    if (file.mimetype === 'video/mp4' || file.mimetype === 'video/webm') {
-      cb(null, true);
-    } else {
-      cb(null, false);
-    }
+  // Configura qué tipos de archivos permitir, por ejemplo, para imágenes y videos:
+  if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) {
+    cb(null, true);
   } else {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/webp') {
-      cb(null, true);
-    } else {
-      cb(null, false);
-    }
+    cb(null, false);
   }
 };
 
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({ storage, fileFilter });
 
-// Función para subir a Google Drive
-const uploadToDrive = (file, folderId) => {
+// Función para subir archivos a Google Drive
+const uploadToDrive = async (file, folderId) => {
   const fileMetadata = {
-    name: Date.now() + '-' + file.originalname,
-    parents: folderId ? [folderId] : [] // Si quieres subirlo a una carpeta específica, de lo contrario será en la raíz
+    name: file.originalname,
+    parents: [folderId],
   };
   const media = {
     mimeType: file.mimetype,
-    body: Buffer.from(file.buffer) // convierte el buffer en un stream
+    body: Buffer.from(file.buffer),
   };
-
-  return drive.files.create({
+  const response = await drive.files.create({
     resource: fileMetadata,
     media: media,
-    fields: 'id'
+    fields: 'id',
   });
+  return response.data.id;
 };
-
-// Ejemplo de cómo usarlo en una ruta de Express
-app.post('/upload', upload.single('file'), (req, res) => {
-  if (!req.file) return res.status(400).send('No file uploaded.');
-
-  // Aquí puedes definir el ID de la carpeta basado en el tipo de archivo que estás subiendo
-  const folderId = req.file.fieldname === 'video' ? 'tu_folder_id_de_videos' : 'tu_folder_id_de_imágenes';
-
-  uploadToDrive(req.file, folderId)
-    .then((driveResponse) => {
-      res.send(`File uploaded to Google Drive with ID: ${driveResponse.data.id}`);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error uploading to Google Drive');
-    });
-});
 
 module.exports = {
   upload,
+  uploadToDrive,
+  videoFolder,
+  imgFolder,
+  drive
 };
-
-
