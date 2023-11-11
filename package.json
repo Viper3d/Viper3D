@@ -1,7 +1,7 @@
 {
   "name": "viper3d",
   "version": "1.0.0",
-  "description": "Pagina web Viper3d -- impresiones en 3d ",
+  "description": "Pagina web Viper3d -- impresiones en 3d",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -24,6 +24,7 @@
     "mysql2": "^3.3.1",
     "sanitize-html": "^2.10.0",
     "sweetalert2": "^11.7.12",
-    "validator": "^13.9.0"
+    "validator": "^13.9.0",
+    "googleapis": "^39.2.0"
   }
 }
