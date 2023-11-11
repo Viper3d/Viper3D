@@ -101,16 +101,21 @@ router.post('/create', upload.fields([{ name: 'images', maxCount: 5 }, { name: '
       videoId = await uploadToDrive(req.files['video'][0], videoFolder);
     }
 
-    // Crear el producto en la base de datos
-    const newProduct = await createProduct({
-      product_name,
-      product_description,
-      images: imageIds,
-      video: videoId,
-      price,
-      purchase_link,
-      category_id
-    });
+// Crear el producto en la base de datos
+const newProduct = await createProduct(
+  product_name,
+  product_description,
+  imageIds[0] || null, // image1
+  imageIds[1] || null, // image2
+  imageIds[2] || null, // image3
+  imageIds[3] || null, // image4
+  imageIds[4] || null, // image5
+  videoId,
+  price,
+  purchase_link,
+  category_id
+);
+
 
     res.status(200).json(newProduct);
   } catch (error) {
