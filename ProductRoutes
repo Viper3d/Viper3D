@@ -1,0 +1,178 @@
+const express = require('express');
+const { google } = require('googleapis');
+const multer = require('multer');
+
+// Configuración de Google Drive
+const client = new google.auth.JWT(
+  process.env.GOOGLE_CLIENT_EMAIL,
+  null,
+  process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  ['https://www.googleapis.com/auth/drive']
+);
+
+const drive = google.drive({ version: 'v3', auth: client });
+
+// ID de carpetas en Google Drive
+const videoFolder = '13GpXRx0KOVynwvcU4RdFm35fnyYt4MrL';
+const imgFolder = '1ldv5248POuRX4O39RF7snLksx8Uj7snh';
+
+// Configuración de Multer
+const storage = multer.memoryStorage();
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+const upload = multer({ storage, fileFilter });
+
+// Función para subir archivos a Google Drive
+const uploadToDrive = async (file, folderId) => {
+  const fileMetadata = {
+    name: file.originalname,
+    parents: [folderId],
+  };
+  const media = {
+    mimeType: file.mimetype,
+    body: Buffer.from(file.buffer),
+  };
+  const response = await drive.files.create({
+    resource: fileMetadata,
+    media: media,
+    fields: 'id',
+  });
+  return response.data.id;
+};
+
+// Función para eliminar archivos de Google Drive
+const deleteFromDrive = async (fileId) => {
+  await drive.files.delete({ fileId });
+};
+
+// Creación de routers
+const router = express.Router();
+const authProductRouter = express.Router();
+
+// Importaciones de tus funciones de base de datos
+// Asegúrate de tener estas funciones en tu proyecto
+const {
+  getProducts,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+  getProductById
+} = require('../database/products');
+
+// Rutas
+// Ruta para obtener todos los productos
+router.get('/getProducts', async (req, res) => {
+  try {
+    const products = await getProducts();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).send('Error al obtener los productos');
+  }
+});
+
+// Ruta para obtener un producto por ID
+router.get('/getProductById/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await getProductById(id);
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).send('Error al obtener el producto');
+  }
+});
+
+// Ruta para crear un nuevo producto
+router.post('/create', upload.fields([{ name: 'images', maxCount: 5 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
+  try {
+    const { product_name, product_description, price, purchase_link, category_id } = req.body;
+
+    // Subir imágenes a Google Drive
+    const imageFiles = req.files['images'] || [];
+    const imageIds = await Promise.all(imageFiles.map(file => uploadToDrive(file, imgFolder)));
+
+    // Subir video a Google Drive
+    let videoId = null;
+    if (req.files['video'] && req.files['video'][0]) {
+      videoId = await uploadToDrive(req.files['video'][0], videoFolder);
+    }
+
+    // Crear el producto en la base de datos
+    const newProduct = await createProduct({
+      product_name,
+      product_description,
+      images: imageIds,
+      video: videoId,
+      price,
+      purchase_link,
+      category_id
+    });
+
+    res.status(200).json(newProduct);
+  } catch (error) {
+    res.status(500).send('Error al crear el producto');
+  }
+});
+
+// Ruta para actualizar un producto
+router.put('/update/:id', upload.fields([{ name: 'images', maxCount: 5 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
+  const { id } = req.params;
+  try {
+    // Obtener datos del producto existente
+    const oldProduct = await getProductById(id);
+
+    // Subir nuevas imágenes y eliminar las antiguas de Google Drive
+    const newImageFiles = req.files['images'] || [];
+    const newImageIds = await Promise.all(newImageFiles.map(file => uploadToDrive(file, imgFolder)));
+    await Promise.all(oldProduct.images.map(imageId => deleteFromDrive(imageId)));
+
+    // Manejar actualización de video
+    let newVideoId = oldProduct.video;
+    if (req.files['video'] && req.files['video'][0]) {
+      if (oldProduct.video) {
+        await deleteFromDrive(oldProduct.video);
+      }
+      newVideoId = await uploadToDrive(req.files['video'][0], videoFolder);
+    }
+
+    // Actualizar datos del producto
+    const updatedProduct = await updateProduct(id, {
+      // ...datos del producto actualizados...
+      images: newImageIds,
+      video: newVideoId
+    });
+
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).send('Error al actualizar el producto');
+  }
+});
+
+// Ruta para eliminar un producto
+router.delete('/delete/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await getProductById(id);
+
+    // Eliminar archivos de Google Drive
+    await Promise.all(product.images.map(imageId => deleteFromDrive(imageId)));
+    if (product.video) {
+      await deleteFromDrive(product.video);
+    }
+
+    // Eliminar el producto de la base de datos
+    await deleteProduct(id);
+    res.status(200).send('Producto eliminado con éxito');
+  } catch (error) {
+    res.status(500).send('Error al eliminar el producto');
+  }
+});
+
+// Rutas adicionales...
+// authProductRouter.get('/', ...);
+
+module.exports = { productRouter: router, authProductRouter };
