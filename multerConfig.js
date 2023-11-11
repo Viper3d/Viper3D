@@ -24,7 +24,7 @@ const uploadToDrive = async (file, folderId) => {
   };
   const media = {
     mimeType: file.mimetype,
-    body: Buffer.from(file.buffer),
+    body: file.buffer, // directamente pasamos el buffer aquí
   };
   const response = await drive.files.create({
     resource: fileMetadata,
@@ -33,6 +33,7 @@ const uploadToDrive = async (file, folderId) => {
   });
   return response.data.id;
 };
+
 
 // Función para crear y subir un archivo txt a Google Drive
 async function uploadTextToDrive(text, folderId) {
