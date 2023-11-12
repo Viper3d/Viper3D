@@ -101,7 +101,19 @@ router.post('/create', upload.fields([{ name: 'images', maxCount: 5 }, { name: '
       videoId = await uploadToDrive(req.files['video'][0], videoFolder);
     }
 
+        // Aquí es donde quieres colocar tu console.log
+        console.log({
+          product_name,
+          product_description,
+          imageIds, // Esto mostrará un array, asegúrate de que ninguno de los elementos sea undefined
+          videoId,
+          price,
+          purchase_link,
+          category_id
+        });
+
 // Crear el producto en la base de datos
+
 const newProduct = await createProduct(
   product_name,
   product_description,
