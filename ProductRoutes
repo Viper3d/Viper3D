@@ -37,25 +37,28 @@ router.get('/getProductById/:id', async (req, res) => {
 });
 
 // Ruta para crear un nuevo producto
-router.post('/create', upload.fields([{ name: 'images', maxCount: 5 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
+router.post('/create', async (req, res) => {
   try {
     const { product_name, product_description, price, purchase_link, category_id } = req.body;
-// Crear el producto en la base de datos
 
-const newProduct = await createProduct(
-  product_name,
-  product_description,
-  imageIds[0] || null, // image1
-  imageIds[1] || null, // image2
-  imageIds[2] || null, // image3
-  imageIds[3] || null, // image4
-  imageIds[4] || null, // image5
-  videoId,
-  price,
-  purchase_link,
-  category_id
-);
+    // Extraer nombres de archivo de las imágenes y video si están presentes
+    const imageNames = req.files['images'] ? req.files['images'].map(file => file.originalname) : [];
+    const videoName = req.files['video'] ? req.files['video'][0].originalname : null;
 
+    // Crear el producto en la base de datos
+    const newProduct = await createProduct(
+      product_name,
+      product_description,
+      imageNames[0] || null, // image1
+      imageNames[1] || null, // image2
+      imageNames[2] || null, // image3
+      imageNames[3] || null, // image4
+      imageNames[4] || null, // image5
+      videoName,
+      price,
+      purchase_link,
+      category_id
+    );
 
     res.status(200).json(newProduct);
   } catch (error) {
@@ -67,55 +70,49 @@ const newProduct = await createProduct(
 router.put('/update/:id', upload.fields([{ name: 'images', maxCount: 5 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
   const { id } = req.params;
   try {
-    // Obtener datos del producto existente
-    const oldProduct = await getProductById(id);
+    const { product_name, product_description, price, purchase_link, category_id } = req.body;
 
-    // Subir nuevas imágenes y eliminar las antiguas de Google Drive
-    const newImageFiles = req.files['images'] || [];
-    const newImageIds = await Promise.all(newImageFiles.map(file => uploadToDrive(file, imgFolder)));
-    await Promise.all(oldProduct.images.map(imageId => deleteFromDrive(imageId)));
-
-    // Manejar actualización de video
-    let newVideoId = oldProduct.video;
-    if (req.files['video'] && req.files['video'][0]) {
-      if (oldProduct.video) {
-        await deleteFromDrive(oldProduct.video);
-      }
-      newVideoId = await uploadToDrive(req.files['video'][0], videoFolder);
-    }
+    // Extraer nombres de archivo de las imágenes y video si están presentes
+    const imageNames = req.files['images'] ? req.files['images'].map(file => file.originalname) : [];
+    const videoName = req.files['video'] ? req.files['video'][0].originalname : null;
 
     // Actualizar datos del producto
-    const updatedProduct = await updateProduct(id, {
-      // ...datos del producto actualizados...
-      images: newImageIds,
-      video: newVideoId
-    });
+    const updatedProduct = await updateProduct(
+      id,
+      product_name,
+      product_description,
+      imageNames[0] || null, // image1
+      imageNames[1] || null, // image2
+      imageNames[2] || null, // image3
+      imageNames[3] || null, // image4
+      imageNames[4] || null, // image5
+      videoName,
+      price,
+      purchase_link,
+      category_id
+    );
 
     res.status(200).json(updatedProduct);
   } catch (error) {
+    console.error('Error al actualizar el producto:', error);
     res.status(500).send('Error al actualizar el producto');
   }
 });
+
 
 // Ruta para eliminar un producto
 router.delete('/delete/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await getProductById(id);
-
-    // Eliminar archivos de Google Drive
-    await Promise.all(product.images.map(imageId => deleteFromDrive(imageId)));
-    if (product.video) {
-      await deleteFromDrive(product.video);
-    }
-
     // Eliminar el producto de la base de datos
     await deleteProduct(id);
     res.status(200).send('Producto eliminado con éxito');
   } catch (error) {
+    console.error('Error al eliminar el producto:', error);
     res.status(500).send('Error al eliminar el producto');
   }
 });
+
 
 // Rutas adicionales...
 // authProductRouter.get('/', ...);
