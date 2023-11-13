@@ -230,28 +230,6 @@ html, body {
   word-wrap: break-word; /* Ajuste de palabras */
 }
 
-/* Ajustes para pantallas de tamaño de tablet */
-@media (max-width: 768px) {
-  .card-description h4 {
-    font-size: 1rem; /* Tamaño más pequeño para tablet */
-  }
-  .card-description p {
-    font-size: 0.9rem; /* Tamaño más pequeño para tablet */
-  }
-}
-
-/* Ajustes para pantallas de tamaño móvil */
-@media (max-width: 576px) {
-  .card-description {
-    padding: 0px; /* Agregar algo de padding para evitar que el texto toque los bordes */
-  }
-  .card-description h4 {
-    font-size: 3.2vw; /* Tamaño de fuente responsivo para móviles */
-  }
-  .card-description p {
-    font-size: 2.5vw; /* Tamaño de fuente responsivo para móviles */
-  }
-}
 
 
 .card-title-one-line {
