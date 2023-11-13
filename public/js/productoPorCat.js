@@ -222,7 +222,7 @@ async function showProductModal(productId) {
 
           const img = document.createElement('img');
           img.src = `${googleDriveBaseUrl}${imageId}`;
-          img.className = 'd-block w-100';
+          img.className = 'd-block carousel-media';
           img.alt = `Imagen ${i} del producto ${product.product_name}`;
 
           carouselItem.appendChild(img);
@@ -238,7 +238,7 @@ async function showProductModal(productId) {
         carouselItem.className = `carousel-item${hasActiveItem ? '' : ' active'}`;
 
         const video = document.createElement('video');
-        video.className = 'video-js vjs-default-skin d-block w-100';
+        video.className = 'video-js vjs-default-skin d-block carousel-media';
         video.controls = true;
         video.src = `${googleDriveBaseUrl}${videoId}`;
 
