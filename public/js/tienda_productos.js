@@ -261,7 +261,7 @@ async function loadCategoryBlocks() {
 
 
 async function mostrarProductosDestacados() {
-  const idsDestacados = [68, 72, 82, 70];  // Cambia estos números a los IDs que quieras destacar
+  const idsDestacados = [21, 18, 20, 11];  // Cambia estos números a los IDs que quieras destacar
 
   let contenedorDestacados = document.getElementById("destacados");
   contenedorDestacados.innerHTML = '';  // Limpiar el contenedor en caso de que ya contenga productos
