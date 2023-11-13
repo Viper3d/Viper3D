@@ -253,6 +253,7 @@ html, body {
   }
 }
 
+
 .card-title-one-line {
   white-space: nowrap;    /* Asegura que el texto no se ajustará a una nueva línea */
   overflow: hidden;      /* Oculta el texto que excede el ancho del elemento */
@@ -685,6 +686,12 @@ html, body {
   .card-text {
       font-size: 0.75rem; /* Tamaño más pequeño para pantallas pequeñas */
   }
+}
+
+
+.carousel-media {
+  max-width: 75%; /* Ajusta este valor según tus necesidades */
+  margin: auto; /* Esto centrará los elementos en el carrusel */
 }
 
 
