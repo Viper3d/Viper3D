@@ -55,6 +55,9 @@
   font-size: 1rem;
 }
 
+footer {
+  margin-top: auto;
+}
 /* Estilo para el gradiente de fondo del footer */
 .footer-gradient {
   background-image: linear-gradient(to bottom, #000000, #1a237e);
@@ -81,6 +84,7 @@
   font-size: 24px;
   margin: 0 8px;
 }
+
 
 /* Estilo para el gradiente de la cabecera */
 .header-gradient {
@@ -219,31 +223,45 @@ html, body {
 
 /* Estilo para el título de la descripción superpuesta */
 .card-description h4 {
-  font-size: 1.2rem; /* Tamaño de fuente por defecto */
+  font-size: 1.2rem; /* Tamaño de fuente más pequeño para ajustar en pantallas pequeñas */
   margin-bottom: 10px;
-  word-wrap: break-word; /* Ajuste de palabras */
+  word-wrap: break-word; /* Permite que las palabras largas se rompan y se ajusten al ancho del contenedor */
 }
 
 /* Estilo para el texto de la descripción superpuesta */
 .card-description p {
-  font-size: 1rem; /* Tamaño de fuente por defecto */
-  word-wrap: break-word; /* Ajuste de palabras */
+  font-size: 1.8; /* Tamaño de fuente más pequeño para ajustar en pantallas pequeñas */
+  word-wrap: break-word; /* Permite que las palabras largas se rompan y se ajusten al ancho del contenedor */
 }
 
-/* Estilo para el título de la descripción superpuesta */
+.card-description {
+  /* Ajustes existentes */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5%; /* Ajusta el padding para dar más espacio al texto */
+}
+
 .card-description h4 {
-  font-size: 1.2rem; /* Tamaño de fuente por defecto */
-  margin-bottom: 10px;
-  word-wrap: break-word; /* Ajuste de palabras */
+  font-size: 2.5vw; /* Tamaño de fuente más pequeño para móviles */
+  margin-bottom: 5px; /* Reducir el margen inferior */
+  line-height: 1.2; /* Ajustar la altura de la línea */
 }
 
-/* Estilo para el texto de la descripción superpuesta */
 .card-description p {
-  font-size: 1rem; /* Tamaño de fuente por defecto */
-  word-wrap: break-word; /* Ajuste de palabras */
+  font-size: 2vw; /* Tamaño de fuente más pequeño para móviles */
+  line-height: 1.2; /* Ajustar la altura de la línea */
 }
 
-
+@media (max-width: 576px) {
+  .card-description h4 {
+    font-size: 3.5vw; /* Ajustar si es necesario para móviles */
+  }
+  .card-description p {
+    font-size: 3vw; /* Ajustar si es necesario para móviles */
+  }
+}
 
 
 .card-title-one-line {
@@ -571,7 +589,6 @@ html, body {
 .adaptive-container {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   height: auto;
   
 }
@@ -645,8 +662,6 @@ html, body {
 .card-title {
   margin-top: 0; /* Opcional: quita el margen superior si es necesario */
 }
-
-
 
 
 /* Estilos por defecto para pantallas grandes */
